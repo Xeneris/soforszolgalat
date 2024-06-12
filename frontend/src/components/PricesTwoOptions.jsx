@@ -34,7 +34,7 @@ const PricesTwoOptions = () => {
 
   async function fetchCityPartPrice(cityOne, cityTwo) {
     try {
-      const response = await fetch('http://localhost:5000/city_part_prices', {
+      const response = await fetch('/city_part_prices', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ const PricesTwoOptions = () => {
 
   async function fetchPrice(city) {
     try {
-      const response = await fetch('http://localhost:5000/prices', {
+      const response = await fetch('/prices', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ const PricesTwoOptions = () => {
   useEffect(() => {
     async function fetchCityParts() {
       try {
-        const response = await fetch(`http://localhost:5000/city_parts`);
+        const response = await fetch(`/city_parts`);
         if (!response.ok) {
           throw new Error('Failed to fetch city parts');
         }
@@ -102,7 +102,7 @@ const PricesTwoOptions = () => {
   useEffect(() => {
     async function fetchCityNames() {
       try {
-        const response = await fetch(`http://localhost:5000/cities`);
+        const response = await fetch(`/cities`);
         if (!response.ok) {
           throw new Error('Failed to fetch city names');
         }
