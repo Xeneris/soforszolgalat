@@ -70,6 +70,7 @@ const PricesTwoOptions = () => {
       }
 
       const data = await response.json();
+      console.log(data)
       setPrice(data.city.distance * 500);
       setLoading(false);
 
