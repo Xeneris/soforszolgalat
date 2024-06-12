@@ -90,7 +90,7 @@ const BookingFrom = () => {
 
     async function sendForm() {
         try {
-            const response = await fetch('http://localhost:5000/send_mail', {
+            const response = await fetch('/send_mail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
