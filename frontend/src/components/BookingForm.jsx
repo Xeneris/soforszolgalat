@@ -25,67 +25,53 @@ const BookingFrom = () => {
 
     const handleChangeName = (e) => {
         setName(e.target.value);
-        console.log(name)
     }
 
     const handleChangeTel = (e) => {
         setTel(e.target.value);
-        console.log(tel)
     }
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value);
-        console.log(email)
     }
 
     const handleChangeDay = (e) => {
         setDay(e.target.value);
-        console.log(day)
     }
     const handleChangeHour = (e) => {
         setHour(e.target.value);
-        console.log(hour)
     }
     const handleChangeMinute = (e) => {
         setMin(e.target.value);
-        console.log(min)
     }
     const handleChangeCarType = (e) => {
         setCarType(e.target.value);
-        console.log(carType)
     }
     const handleChangeLicensePlate = (e) => {
         setLicensePlate(e.target.value);
-        console.log(licensePlate)
     }
     const handleChangeColor = (e) => {
         setColor(e.target.value);
-        console.log(color)
     }
     const handleChangeKitero = (e) => {
         setKitero(e.target.value);
-        console.log(kitero)
     }
 
     const handleChangeFrom = (e) => {
         setFrom(e.target.value);
-        console.log(from)
     }
 
     const handleChangeTo = (e) => {
         setTo(e.target.value);
-        console.log(to)
     }
     const handleChangeMegjegyzes = (e) => {
         setMegjegyzes(e.target.value);
-        console.log(megjegyzes)
     }
 
     const Atulok = atulo.map(Atulo => Atulo
     )
     const handleAtuloChange = (e) => {
         setCheckAtulo(atulo[e.target.value]);
-        console.log((atulo[e.target.value]))
     }
 
     async function sendConfirmation() {
