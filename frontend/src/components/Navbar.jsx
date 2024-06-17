@@ -24,14 +24,14 @@ const Navbar = () => {
           </button>
           {/* Navbar buttons */}
           <ul className="hidden md:flex space-x-4">
-            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">Home</a></li>
-            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">About</a></li>
-            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">Services</a></li>
-            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">Contact</a></li>
+            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">Főoldal</a></li>
+            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">Rólunk</a></li>
+            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">Szolgáltatásaink</a></li>
+            <li><a href="#" className="text-yellow-400 hover:text-yellow-300">Kapcsolat</a></li>
           </ul>
         </div>
         <div className="flex justify-center items-center">
-          <div className="text-yellow-400 text-xl font-bold">Your Logo</div>
+          <div className="text-yellow-400 text-xl font-bold"><img src="/Logo.png" alt="Your Logo" className='w-25 h-8' /></div>
         </div>
       </div>
       {/* Render menu items conditionally based on menu visibility */}

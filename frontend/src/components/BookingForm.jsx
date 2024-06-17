@@ -16,10 +16,11 @@ const BookingFrom = () => {
     const [to, setTo] = useState(" ");
     const [megjegyzes, setMegjegyzes] = useState("Nincs");
     const [atulo, setAtulo] = useState(["Nincs, 4-nél kevesebben vagyunk", "Van, 4-nél többen vagyunk"]);
-    const [checkAtulo, setCheckAtulo] = useState("");
+    const [checkAtulo, setCheckAtulo] = useState("Nincs, 4-nél kevesebben vagyunk");
 
     const handleSubmit = (e) => {
         sendForm();
+        sendConfirmation();
     }
 
     const handleChangeName = (e) => {
@@ -86,6 +87,24 @@ const BookingFrom = () => {
         setCheckAtulo(atulo[e.target.value]);
         console.log((atulo[e.target.value]))
     }
+
+    async function sendConfirmation() {
+        try {
+            const response = await fetch('/send_confirmation_mail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Nev: name, Telefon: tel, Email: email, Nap: day, Ora: hour, Perc: min, AutoTipus: carType, Rendszam: licensePlate, Szin: color, Atulo: checkAtulo, Honnan: from, Hova: to, Kitero: kitero, Megjegyzes: megjegyzes })
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch price');
+            }
+
+        } catch (error) {
+            console.error('Something was wrong with the email:', error);
+        }
+    };
 
 
     async function sendForm() {
@@ -212,10 +231,6 @@ const BookingFrom = () => {
                 <div>
                     <label className="block text-sm font-medium">EGYÉB MEGJEGYZÉS</label>
                     <textarea onChange={handleChangeMegjegyzes} className="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="4"></textarea>
-                </div>
-                <div className="text-sm text-gray-600">
-                    A nem miskolci kezdő címmel rendelkező elfoglalások esetében a kalkulált ár 50%-át átutalni szükséges a honlapunkon található bankszámlaszámra.<br />
-                    A 20.000 Ft feletti fuvarok esetében szintén a kalkulált ár 50%-át szükséges átutalni számunkra a honlapunkon található bankszámlaszámra.
                 </div>
                 <div className="flex items-start">
                     <input type="checkbox" className="mt-1 mr-2" />

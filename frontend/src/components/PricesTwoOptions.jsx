@@ -34,7 +34,7 @@ const PricesTwoOptions = () => {
 
   async function fetchCityPartPrice(cityOne, cityTwo) {
     try {
-      const response = await fetch('/city_part_prices', {
+      const response = await fetch(`/city_part_prices`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ const PricesTwoOptions = () => {
 
   async function fetchPrice(city) {
     try {
-      const response = await fetch('/prices', {
+      const response = await fetch(`/prices`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -153,9 +153,9 @@ const PricesTwoOptions = () => {
 
         <div className="bg-gray-100 rounded-lg shadow-md p-6">
           <div className="mb-5">
-            <label htmlFor="option3" className="block font-semibold mb-1">Az árakat Miskolctól számoljuk</label>
+            <label htmlFor="option3" className="block font-semibold mb-1">Miskolc környező települései</label>
             <select id="option3" onChange={handleSelect} className="w-full p-2 border border-gray-300 rounded-md">
-              <option value="">-- Select --</option>
+              <option value="">-- Válasszon --</option>
               {cityNames.map((cityName, index) => (
                 <option key={index} value={cityName}>{cityName}</option>
               ))}
