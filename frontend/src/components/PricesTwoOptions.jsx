@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 const PricesTwoOptions = () => {
   const [cityNames, setCityNames] = useState([]);
   const [price, setPrice] = useState(0);
@@ -34,7 +36,7 @@ const PricesTwoOptions = () => {
 
   async function fetchCityPartPrice(cityOne, cityTwo) {
     try {
-      const response = await fetch(`/city_part_prices`, {
+      const response = await fetch(`http://zenit-soforszolgalat.hu/api/city_part_prices`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -58,7 +60,7 @@ const PricesTwoOptions = () => {
 
   async function fetchPrice(city) {
     try {
-      const response = await fetch(`/prices`, {
+      const response = await fetch(`http://zenit-soforszolgalat.hu/api/prices`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -70,8 +72,70 @@ const PricesTwoOptions = () => {
       }
 
       const data = await response.json();
-      console.log(data)
-      setPrice(data.city.distance * 500);
+      switch (data.city.distance) {
+        case 4:
+          setPrice(7300);
+          break;
+        case 5:
+          setPrice(8300);
+          break;
+        case 6:
+          setPrice(9300);
+          break;
+        case 7:
+          setPrice(10300);
+          break;
+        case 8:
+          setPrice(12300);
+          break;
+        case 9:
+          setPrice(13300);
+          break;
+        case 10:
+          setPrice(15300);
+          break;
+        case 11:
+          setPrice(17300);
+          break;
+        case 12:
+          setPrice(18300);
+          break;
+        case 13:
+          setPrice(20300);
+          break;
+        case 14:
+          setPrice(21300);
+          break;
+        case 15:
+          setPrice(22300);
+          break;
+        case 16:
+          setPrice(25300);
+          break;
+        case 17:
+          setPrice(26300);
+          break;
+        case 18:
+          setPrice(28300);
+          break;
+        case 19:
+          setPrice(29300);
+          break;
+        case 20:
+          setPrice(30300);
+          break;
+        case 21:
+          setPrice(33300);
+          break;
+        case 22:
+          setPrice(34300);
+          break;
+        case 23:
+          setPrice(35300);
+          break;
+        default:
+          break;
+      }
       setLoading(false);
 
     } catch (error) {
@@ -83,7 +147,7 @@ const PricesTwoOptions = () => {
   useEffect(() => {
     async function fetchCityParts() {
       try {
-        const response = await fetch(`/city_parts`);
+        const response = await fetch(`http://zenit-soforszolgalat.hu/api/city_parts`);
         if (!response.ok) {
           throw new Error('Failed to fetch city parts');
         }
@@ -103,7 +167,7 @@ const PricesTwoOptions = () => {
   useEffect(() => {
     async function fetchCityNames() {
       try {
-        const response = await fetch(`/cities`);
+        const response = await fetch(`http://zenit-soforszolgalat.hu/api/cities`);
         if (!response.ok) {
           throw new Error('Failed to fetch city names');
         }
@@ -125,49 +189,74 @@ const PricesTwoOptions = () => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="min-h-screen bg-gray-500 flex flex-col items-center justify-center">
+      {/* Text section */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-white p-4">
+        <header className="mb-12 text-center">
+          <h1 className="text-3xl sm:text-5xl font-bold mb-4">Szolgáltatásaink:</h1><br/>
+          <p className="text-lg sm:text-md max-w-lg mx-auto">
+          <span className="text-xl font-semibold">Személyes sofőrszolgálat:</span>  A mindennapok luxusa, amikor csak szeretné.
+          </p><br/>
+          <p className="text-lg sm:text-md max-w-lg mx-auto">
+          <span className="text-xl font-semibold">Üzleti sofőrszolgálat:</span> Professzionális, diszkrét utaztatás üzleti igények szerint.
+          </p><br/>
+          <p className="text-lg sm:text-md max-w-lg mx-auto">
+          <span className="text-xl font-semibold">Reptérről haza:</span> Gondtalan hazautazás a repülőtérről, stressz nélkül.
+          </p><br/>
+          <p className="text-lg sm:text-md max-w-lg mx-auto">
+          <span className="text-xl font-semibold">Rendezvények és esküvők kitelepülések:</span> Különleges napokra különleges szállítás, hogy minden tökéletes legyen.
+          </p><br/>
+        </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+      </div>
 
-        <div className="bg-gray-100 rounded-lg shadow-md p-6">
-          <div className="mb-5">
-            <label htmlFor="miskolc" className="block font-semibold mb-1">Indulás</label>
-            <select onChange={handleCityPartSelectOne} className="w-full p-2 border border-gray-300 rounded-md">
-              {cityPart.map((cityPart, index) => (
-                <option key={index} value={cityPart}>{cityPart}</option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-5">
-            <label htmlFor="miskolc2" className="block font-semibold mb-1">Cél</label>
-            <select onChange={handleCityPartSelectTwo} className="w-full p-2 border border-gray-300 rounded-md">
-              {cityPart.map((cityPart, index) => (
-                <option key={index} value={cityPart}>{cityPart}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <p className="font-semibold">Ár: {cityPartFare} Forint</p>
-          </div>
+      {/* Select boxes section */}
+      <div className="container mx-auto py-8">
+        <div className="bg-blue-200 rounded-md p-4">
+          <p className="text-lg font-semibold text-center">Válassza ki az indulási helyet és az úti célját</p>
+          <p className="text-sm text-center text-gray-600 mt-2">Itt ellenőrizheti árainkat Miskolcon belül, és Miskolc környező településeire utazva is.</p>
         </div>
 
-        <div className="bg-gray-100 rounded-lg shadow-md p-6">
-          <div className="mb-5">
-            <label htmlFor="option3" className="block font-semibold mb-1">Miskolc környező települései</label>
-            <select id="option3" onChange={handleSelect} className="w-full p-2 border border-gray-300 rounded-md">
-              <option value="">-- Válasszon --</option>
-              {cityNames.map((cityName, index) => (
-                <option key={index} value={cityName}>{cityName}</option>
-              ))}
-            </select>
+        <div className="bg-gray-500 grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <div className="bg-gray-300 rounded-lg shadow-md p-6">
+            <div className="mb-5">
+              <label htmlFor="miskolc" className="block font-semibold mb-1">Indulás</label>
+              <select onChange={handleCityPartSelectOne} className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                {cityPart.map((city, index) => (
+                  <option key={index} value={city}>{city}</option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-5">
+              <label htmlFor="miskolc2" className="block font-semibold mb-1">Cél</label>
+              <select onChange={handleCityPartSelectTwo} className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                {cityPart.map((city, index) => (
+                  <option key={index} value={city}>{city}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <p className="font-semibold">Ár: {cityPartFare} Forint</p>
+            </div>
           </div>
-          <div>
-            <p className="font-semibold mb-1">Ár: {price} Forint</p>
+
+          <div className="bg-gray-300 rounded-lg shadow-md p-6">
+            <div className="mb-5">
+              <label htmlFor="option3" className="block font-semibold mb-1">Miskolc környező települései</label>
+              <select id="option3" onChange={handleSelect} className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                <option value="">-- Válasszon --</option>
+                {cityNames.map((cityName, index) => (
+                  <option key={index} value={cityName}>{cityName}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <p className="font-semibold mb-1">Ár: {price} Forint</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 

@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Main from './components/Main';
 import PricesTwoOptions from './components/PricesTwoOptions';
 import BookingForm from './components/BookingForm'
+import Aszf from './components/Aszf';
+import AboutUs from './components/AboutUs';
 import './App.css';
 
 const App = () => {
@@ -12,6 +14,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={[<Navbar />, <Main />, <PricesTwoOptions />]} />
         <Route path="/foglalas" element={[<Navbar />, <BookingForm />]} />
+        <Route path="/aszf" element={[<Navbar />, <Aszf />]} />
+        <Route path="/rolunk" element={[<Navbar />, <AboutUs />]} />
       </Routes>
     </BrowserRouter>
 

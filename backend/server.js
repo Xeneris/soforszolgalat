@@ -14,6 +14,7 @@ const CityPartFare = require('./models/cityPartFare');
 
 const app = express();
 app.use(express.json());
+app.use(express.static('/root/soforszolgalat/frontend/build'));
 
 connectToDb();
 app.use(cors());
@@ -27,7 +28,15 @@ const mailjet = Mailjet.apiConnect(
   }
 );
 
-app.post("/send_confirmation_mail", (req, res) => {
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/zenit-soforszolgalat.hu-0001/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/zenit-soforszolgalat.hu-0001/fullchain.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate
+};
+
+app.post("/api/send_confirmation_mail", (req, res) => {
 
   const emailBody = `
     <h2>Foglalás visszaigazolás</h2>
@@ -96,7 +105,7 @@ app.post("/send_confirmation_mail", (req, res) => {
       Messages: [
         {
           From: {
-            Email: "kornelmarko@hotmail.com",
+            Email: "soforszolgalatzenit@gmail.com",
             Name: "Zenit Sofőrszolgálat"
           },
           To: [
@@ -115,18 +124,18 @@ app.post("/send_confirmation_mail", (req, res) => {
 });
 
 
-app.post("/send_mail", (req, res) => {
+app.post("/api/send_mail", (req, res) => {
   const request = mailjet
     .post('send', { version: 'v3.1' })
     .request({
       Messages: [
         {
           From: {
-            Email: "kornelmarko@hotmail.com",
+            Email: "soforszolgalatzenit@gmail.com",
           },
           To: [
             {
-              Email: `mark.kakoczki0@gmail.com`,
+              Email: `soforszolgalatzenit@gmail.com`,
             }
           ],
           Subject: "Értesítés foglalásról",
@@ -157,33 +166,33 @@ app.get("/", (req, res) => {
   res.json({ hello: "world" });
 });
 
-app.get("/cities", async (req, res) => {
+app.get("/api/cities", async (req, res) => {
   const cities = await Cities.distinct("city");
 
   res.json({ cities: cities });
 });
 
-app.get("/city_parts", async (req, res) => {
+app.get("/api/city_parts", async (req, res) => {
   const cityParts = await CityParts.distinct("city_part");
 
   res.json({ cityParts: cityParts });
 });
 
-app.get("/prices", async (req, res) => {
+app.get("/api/prices", async (req, res) => {
   const city = req.body.city
   const foundCity = await Cities.findOne({ city: city });
 
   res.json({ foundDistance: foundCity.distance });
 });
 
-app.post("/prices", async (req, res) => {
+app.post("/api/prices", async (req, res) => {
   const city = req.body.city
   const distance = await Cities.findOne({ city: city });
 
   res.json({ city: distance })
 });
 
-app.get("/city_part_prices", async (req, res) => {
+app.get("/api/city_part_prices", async (req, res) => {
   const cityOne = req.body.origin
   const cityTwo = req.body.destination
   const cityPartFare = await CityPartFare.findOne({ origin: cityOne, destination: cityTwo });
@@ -192,12 +201,16 @@ app.get("/city_part_prices", async (req, res) => {
 });
 
 
-app.post("/city_part_prices", async (req, res) => {
+app.post("/api/city_part_prices", async (req, res) => {
   const cityOne = req.body.origin
   const cityTwo = req.body.destination
   const cityPartFare = await CityPartFare.findOne({ origin: cityOne, destination: cityTwo });
 
   res.json({ cityPartFare: cityPartFare });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile('/root/soforszolgalat/frontend/build/index.html');
 });
 
 app.listen(process.env.PORT);
